@@ -8,32 +8,13 @@ class Graph:
     def addEdge(self,u,v):
         self.Graph[u].append(v)
 
-    def DFS(self,root):
-        #created visited
-        visited = [False] * (max(self.Graph)+1)
-        #created stack
-        stack = []
-        #add root to stack , mark it as visited
-        stack.append(root)
-        visited[root] = True
-
-        #print root and pop it from the stack and append it's adjacents
+    def DFS(self,root,visited = set()):
+        visited.add(root)
         print(root,end=" ")
-        stack.pop()
-        for i in self.Graph[root]:
-            stack.append(i)
-            visited[i] = True
-            
-        while len(stack):
-            # make the top element as root and add it adjacents to the stack only if they are not visted before, mark them as visited
-            # print the root and remove the top element
-            root = stack[-1]
-            for i in self.Graph[root]:
-                if visited[i] == False:
-                    stack.append(i)
-                    visited[root] = True
-            print(root,end=" ")
-            stack.pop()
+
+        for adjacent in self.Graph[root]:
+            if adjacent not in visited:
+                self.DFS(adjacent,visited)
 
 if __name__ == "__main__":
     # g = Graph()
